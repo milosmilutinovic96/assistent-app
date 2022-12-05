@@ -28,12 +28,10 @@ class ListaArtikla {
             let message = '';
             if(selektor === 'z:row') {
                 this.createListaArtiklaMagacin(Array.from(xmlDom.getElementsByTagName(selektor)));
-                console.log(this.artikli);
                 if(this.artikli.length > 0) message = 'Podaci za 904 su uspešno učitani!';
                 else throw new Error('Doslo je do greske, nema podataka!');
             } else if(selektor === 'Table') {
                 this.createListaArtiklaTrebovanje(Array.from(xmlDom.getElementsByTagName(selektor)));
-                console.log(this.artikli);
                 if(this.artikli.length > 0) message = 'Podaci za trebovanje izvoza su uspešno učitani';
                 else throw new Error('Doslo je do greske, nema podataka!');
             }
@@ -59,7 +57,6 @@ class ListaArtikla {
                 kolicina
             );
         }).forEach((artikal, index) => {
-            // console.log(artikal);
             if(tempSifra === artikal.sifra) {
                 this.artikli[this.artikli.length-1].kolicina += artikal.kolicina;
             } else {

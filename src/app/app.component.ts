@@ -8,7 +8,6 @@ import { ArtikliService } from './services/artikli.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Zdravo :D';
   messages: string[] = [];
 
   constructor(
@@ -28,13 +27,11 @@ export class AppComponent {
 
   async ucitaj904(e: any) {
     let message = await this.artikliService.ucitajArtikle(e.target.files[0], 'z:row');
-    console.log('904');
     this.messages.push(message);
   }
 
   async ucitajTrebovanjeIzvoza(e: any) {
     let message = await this.artikliService.ucitajArtikle(e.target.files[0], 'Table');
-    console.log('Trebovanje');
     this.messages.push(message);
   }
 
