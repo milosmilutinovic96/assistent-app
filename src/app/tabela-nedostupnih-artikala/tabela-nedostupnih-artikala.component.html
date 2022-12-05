@@ -1,0 +1,28 @@
+<table *ngIf="listaArtikala?.length; else praznaLista" class="styled-table">
+    <thead>
+        <tr>
+            <th>Šifra artikla</th>
+            <th>Naziv artikla</th>
+            <th>Dostupna količina</th>
+            <th>Trebovana količina</th>
+            <th>Nedostaje</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let art of listaArtikala">
+            <td>{{art.artikal.sifra}}</td>
+            <td>{{art.artikal.naziv}}</td>
+            <td class="align-right">{{art.artikal.kolicina}}</td>
+            <td class="align-right">{{art.trebovanaKolicina}}</td>
+            <td class="align-right">{{art.trebovanaKolicina - art.artikal.kolicina}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ng-template #praznaLista>
+    <div>
+
+        Svi artikli su dostupni!
+    </div>
+    <img src="../../assets/734638.512.webp" alt="fox">
+</ng-template>
