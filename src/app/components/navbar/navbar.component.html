@@ -1,0 +1,25 @@
+<img id="fox" src="assets/00003401.png" alt="Fox">
+<div 
+    [ngClass]="{'nav-card': true, 'nav-card-active': tabsService.activeTab === 1}" 
+    (click)="tabsService.changeTab(1)"
+>Početna</div>
+<div 
+    [ngClass]="{'nav-card': true, 'nav-card-active': tabsService.activeTab === 2}"
+    (click)="tabsService.changeTab(2)"
+>903</div>
+<div 
+    [ngClass]="{'nav-card': true, 'nav-card-active': tabsService.activeTab === 3}" 
+    (click)="tabsService.changeTab(3)"
+>904</div>
+<div 
+    [ngClass]="{'nav-card': true, 'nav-card-active': tabsService.activeTab === 4}" 
+    (click)="tabsService.changeTab(4)"
+>Trebovanje izvoza</div>
+<div 
+    [ngClass]="{'nav-card': true, 'nav-card-active': tabsService.activeTab === 5}" 
+    (click)="tabsService.changeTab(5)"
+>Provera trebovanja izvoza</div>
+
+
+<div class="nav-card nav-card-inactive">Provera najave GP</div>
+<div class="nav-card nav-card-inactive">Provera najave izvoza</div>

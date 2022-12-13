@@ -2,12 +2,11 @@ import Artikal from "./artikal";
 
 
 class ListaArtikla {
-    artikli: Artikal[] = [];
 
     constructor() {
     }
     
-    readFileAsync(file: File) {
+    static readFileAsync(file: File) {
         return new Promise((resolve, reject) => {
             let reader = new FileReader();
             reader.onload = () => {
@@ -20,29 +19,26 @@ class ListaArtikla {
         })
     }
 
-    async ucitajPodatkeIzXmlFajla(file: File, selektor: string):Promise<string> {
+    static async ucitajPodatkeIzXmlFajla(file: File, selektor: string):Promise<Artikal[]> {
         try {
+            const artikli: Artikal[] = [];
             let result: string = <string> await this.readFileAsync(file);
             let domParser = new DOMParser();
             let xmlDom = domParser.parseFromString(result, 'text/xml');
-            let message = '';
             if(selektor === 'z:row') {
-                this.createListaArtiklaMagacin(Array.from(xmlDom.getElementsByTagName(selektor)));
-                if(this.artikli.length > 0) message = 'Podaci za 904 su uspešno učitani!';
-                else throw new Error('Doslo je do greske, nema podataka!');
+                return this.createListaArtiklaMagacin(Array.from(xmlDom.getElementsByTagName(selektor)));
             } else if(selektor === 'Table') {
-                this.createListaArtiklaTrebovanje(Array.from(xmlDom.getElementsByTagName(selektor)));
-                if(this.artikli.length > 0) message = 'Podaci za trebovanje izvoza su uspešno učitani';
-                else throw new Error('Doslo je do greske, nema podataka!');
+                return this.createListaArtiklaTrebovanje(Array.from(xmlDom.getElementsByTagName(selektor)));
             }
-            return message;
+            if(artikli.length === 0) throw new Error('Doslo je do greske, nema podataka!');
+            return [];
         } catch(err) {
             console.log(err);
-            return 'Doslo je do greske';
+            return [];
         }
     }
-    createListaArtiklaTrebovanje(nizElemenata: Element[]) {
-        this.artikli = [];
+    static createListaArtiklaTrebovanje(nizElemenata: Element[]): Artikal[] {
+        const artikli: Artikal[] = [];
         let tempSifra = '';
         nizElemenata.map(artikalElement => {
             return artikalElement.children;
@@ -58,16 +54,17 @@ class ListaArtikla {
             );
         }).forEach((artikal, index) => {
             if(tempSifra === artikal.sifra) {
-                this.artikli[this.artikli.length-1].kolicina += artikal.kolicina;
+                artikli[artikli.length-1].kolicina += artikal.kolicina;
             } else {
-                this.artikli.push(artikal);
+                artikli.push(artikal);
                 tempSifra = artikal.sifra;
             }
         });
+        return artikli;
     }
 
-    createListaArtiklaMagacin(nizElemenata: Element[]) {
-        this.artikli = [];
+    static createListaArtiklaMagacin(nizElemenata: Element[]): Artikal[] {
+        const artikli: Artikal[] = [];
         nizElemenata.map(artikalElement => {
             return artikalElement.attributes;
         }).map( art => {
@@ -77,8 +74,9 @@ class ListaArtikla {
             }
             return new Artikal(<string>art[2].nodeValue, <string>art[3].nodeValue, kolicina);
         }).forEach(artikal => {
-            this.artikli.push(artikal);
+            artikli.push(artikal);
         });
+        return artikli;
     }
 
 }

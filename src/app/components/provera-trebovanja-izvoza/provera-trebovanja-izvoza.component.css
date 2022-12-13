@@ -39,10 +39,15 @@
   }
 
 div {
+    height: 100vh;
     font-size: large;
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 img {
-    width: 90px;
+    width: 180px;
+    margin-top: 50px;
 }

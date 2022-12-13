@@ -1,0 +1,24 @@
+<a class="card" (click)="fileTrebovanje.click()">
+    <span>Ubaci trebovanje izvoza</span>
+    <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+    </svg>
+    <input type="file" id="input-file" #fileTrebovanje (change)="ucitajTrebovanjeIzvoza($event)">
+</a>
+
+<table *ngIf="artikliService.trebovanjeIzvoza.length" class="styled-table">
+    <thead>
+        <tr>
+            <th>Šifra artikla</th>
+            <th>Naziv artikla</th>
+            <th>Količina</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let artikal of artikliService.trebovanjeIzvoza">
+            <td>{{artikal.sifra}}</td>
+            <td>{{artikal.naziv}}</td>
+            <td class="align-right">{{artikal.kolicina}}</td>
+        </tr>
+    </tbody>
+</table>
